@@ -4,17 +4,18 @@ import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
 
-  apiKey: "PASTE_YOUR_API_KEY_HERE",
+  apiKey: "AIzaSyCoZaHoO6agnGjccBiO4UFsgA7HSk0iD0M",
 
-  authDomain: "PASTE_YOUR_AUTH_DOMAIN_HERE",
 
-  projectId: "PASTE_YOUR_PROJECT_ID_HERE",
+  authDomain: "three-amigos-open.firebaseapp.com",
 
-  storageBucket: "PASTE_YOUR_STORAGE_BUCKET_HERE",
+  projectId: "three-amigos-open"
+  
+  storageBucket: "three-amigos-open.firebasestorage.app"
 
-  messagingSenderId: "PASTE_YOUR_MESSAGING_SENDER_ID_HERE",
+  messagingSenderId: "1072291060086",
 
-  appId: "PASTE_YOUR_APP_ID_HERE"
+  appId: "1:1072291060086:web:acbc8bd6ed2e76cb670257"
 
 };
 
