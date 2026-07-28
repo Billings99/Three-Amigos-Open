@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { createRoot } from "react-dom/client";
 
 import "./style.css";
+
+import { updateScore, watchScores } from "./scores";
 
 const players = [
 
@@ -16,47 +18,79 @@ const players = [
 
 function App() {
 
+  const [scores, setScores] = useState({});
+
+  useEffect(() => {
+
+    const unsubscribe = watchScores((data) => {
+
+      setScores(data);
+
+    });
+
+    return () => unsubscribe();
+
+  }, []);
+
+  async function enterScore(player, hole, value) {
+
+    await updateScore(player, hole, Number(value));
+
+  }
+
   return (
 
     <div className="app">
 
       <h1>🏆 The Three Amigos Open</h1>
 
-      <h2>54 Hole Gross Championship</h2>
+      <h2>Live Leaderboard</h2>
 
-      <h3>Leaderboard</h3>
+      {players.map((player) => {
 
-      {players.map(player => (
+        const playerScores = scores[player] || {};
 
-        <div className="card" key={player}>
+        const total = Object.values(playerScores)
 
-          {player}
+          .reduce((sum, score) => sum + Number(score), 0);
 
-          <br />
+        return (
 
-          Score: --
+          <div className="card" key={player}>
 
-        </div>
+            <h3>{player}</h3>
 
-      ))}
+            <p>Total: {total || "-"}</p>
 
-      <h3>Courses</h3>
+            <div className="holes">
 
-      <p>Round 1: Old Bridge Golf Club - The Rose</p>
+              {[1,2,3,4,5,6,7,8,9].map((hole) => (
 
-      <p>Round 2: Royce Brook Golf Club</p>
+                <input
 
-      <p>Round 3: Charleston Springs</p>
+                  key={hole}
 
-      <h3>Games</h3>
+                  type="number"
 
-      <p>🐺 Wolf</p>
+                  placeholder={`H${hole}`}
 
-      <p>💰 Skins</p>
+                  onChange={(e) =>
 
-      <p>🎯 Closest to the Pin</p>
+                    enterScore(player, hole, e.target.value)
 
-      <p>🐦 Birdie Pot</p>
+                  }
+
+                />
+
+              ))}
+
+            </div>
+
+          </div>
+
+        );
+
+      })}
 
     </div>
 
